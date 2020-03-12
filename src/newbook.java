@@ -201,6 +201,7 @@ public class newbook extends javax.swing.JFrame {
         String pub = t3.getText();
         String price = t4.getText();
         String pages = t5.getText();
+        
         try{
            // Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost/library","root","");
