@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /*
@@ -24,6 +25,18 @@ public class returnbook extends javax.swing.JFrame {
      */
     public returnbook() {
         initComponents();
+    }
+    public void Delete() throws SQLException{
+        
+        try{
+        conn = DriverManager.getConnection("jdbc:mysql://localhost/library","root","");
+        String sql = "delete from issue where s_id = ?";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, t1.getText());
+        pst.execute();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
     }
 
     /**
@@ -210,6 +223,11 @@ public class returnbook extends javax.swing.JFrame {
         jLabel15.setText("Date Of Return");
 
         jButton2.setText("Return ");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Back");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -306,7 +324,7 @@ public class returnbook extends javax.swing.JFrame {
                 
             }
             else{
-                JOptionPane.showMessageDialog(null,"Student is not found");
+                JOptionPane.showMessageDialog(null,"Book is not issued with this student ID");
             }
             
         } catch (Exception e) {
@@ -319,6 +337,52 @@ public class returnbook extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        String sid = t1.getText();
+        String s_name = jTextField2.getText();
+        String fname = jTextField3.getText();
+        String course = jTextField4.getText();
+        String branch = jTextField5.getText();
+        String year = jTextField6.getText();
+        String sem = jTextField7.getText();
+        String book_id = jTextField8.getText();
+        String bname = jTextField9.getText();
+        String edition = jTextField10.getText();
+        String publisher = jTextField11.getText();
+        String price = jTextField12.getText();
+        String pages = jTextField13.getText();
+        String dateofissue = jTextField14.getText();
+        String dateofreturn = jTextField15.getText();
+        
+        try{
+           // Class.forName("com.mysql.jdbc.Driver");
+            Delete();
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/library","root","");
+           pst = conn.prepareStatement("Insert into returnbook(sid,s_name,fname,course,branch,year,semester,book_id,bname,edition,publisher,price,pages,dateofreturn) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+           pst.setString(1, sid);
+           pst.setString(2, s_name);
+           pst.setString(3,fname);
+           pst.setString(4, course);
+           pst.setString(5, branch);
+           pst.setString(6, year);
+           pst.setString(7, sem);
+           pst.setString(8, book_id);
+           pst.setString(9, bname);
+           pst.setString(10,edition);
+           pst.setString(11, publisher);
+           pst.setString(12, price);
+           pst.setString(13, pages);
+           pst.setString(14, dateofreturn);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null," Book returned");
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
