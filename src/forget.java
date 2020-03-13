@@ -1,5 +1,6 @@
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,12 +30,17 @@ public class forget extends javax.swing.JFrame {
         initComponents();
     }
     public void Search(){
-        String a1 = jTextField1.getText();
-        String sql = "select * from Account where Username = '"+a1+"'";
+       // String a1 = jTextField1.getText();
+        
         try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/library","root","");
+            String sql = "select * from account where Username = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, jTextField1.getText());
+            rs = pst.executeQuery();
             if(rs.next()){
-                jTextField2.setText(rs.getString(1));
-                jTextField3.setText(rs.getString(2));
+                jTextField2.setText(rs.getString(2));
+                jTextField3.setText(rs.getString(4));
                 rs.close();
                 pst.close();
             }
@@ -47,14 +53,22 @@ public class forget extends javax.swing.JFrame {
     }
     
     public void Retrive(){
-        String a1 = jTextField1.getText();
-        String a2 = jTextField2.getText();
-        String sql = "select *from account where answer = '"+a2+"'";
-        
-        pst = conn.prepareStatement(sql);
-        rs = pst.executeQuery();
-        if(rs.next()){
-            
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/library","root","");
+            String sql = "select * from account where answer = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, jTextField4.getText());
+            rs = pst.executeQuery();
+            if(rs.next()){
+                jTextField5.setText(rs.getString(3));
+                rs.close();
+                pst.close();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Can't retrive password");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         
     }
@@ -91,6 +105,11 @@ public class forget extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Forgot Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(0, 153, 153))); // NOI18N
 
         jButton2.setText("Retrive");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Search");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +119,11 @@ public class forget extends javax.swing.JFrame {
         });
 
         jButton4.setText("Back");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Username");
 
@@ -195,6 +219,18 @@ public class forget extends javax.swing.JFrame {
         // TODO add your handling code here:
         Search();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Retrive();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        login ob = new login();
+        ob.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

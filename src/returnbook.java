@@ -24,6 +24,7 @@ public class returnbook extends javax.swing.JFrame {
      * Creates new form returnbook
      */
     public returnbook() {
+        super("Return Book");
         initComponents();
     }
     public void Delete() throws SQLException{

@@ -23,6 +23,7 @@ public class student extends javax.swing.JFrame {
      * Creates new form student
      */
     public student() {
+        super("New Student");
         initComponents();
     }
 

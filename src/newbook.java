@@ -23,6 +23,7 @@ public class newbook extends javax.swing.JFrame {
      * Creates new form newbook
      */
     public newbook() {
+        super("New Book");
         initComponents();
     }
 
