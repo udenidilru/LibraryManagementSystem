@@ -380,6 +380,22 @@ public class returnbook extends javax.swing.JFrame {
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null," Book returned");
             
+            t1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField5.setText("");
+            jTextField6.setText("");
+            jTextField7.setText("");
+            jTextField8.setText("");
+            jTextField9.setText("");
+            jTextField10.setText("");
+            jTextField11.setText("");
+            jTextField12.setText("");
+            jTextField13.setText("");
+            jTextField14.setText("");
+            jTextField15.setText("");
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
