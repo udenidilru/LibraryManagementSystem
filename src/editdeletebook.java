@@ -3,6 +3,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -80,6 +83,11 @@ public class editdeletebook extends javax.swing.JFrame {
         jLabel4.setText("Price");
 
         jButton1.setText("Edit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Search");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -229,11 +237,49 @@ public class editdeletebook extends javax.swing.JFrame {
         pst = conn.prepareStatement(sql);
         pst.setString(1, jTextField1.getText());
         pst.execute();
+        JOptionPane.showMessageDialog(this,"Record Delete");
             }
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String id = jTextField1.getText();
+        String name = jTextField2.getText();
+        String edition = jTextField3.getText();
+        String pub = jTextField6.getText();
+        String price = jTextField4.getText();
+        String pages = jTextField5.getText();
+        try {
+            
+          //  Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/library","root","");
+            pst = conn.prepareStatement("update book set  name = ?,edition = ?,publisher = ?,price = ?,pages = ? where id = ?");
+        //   pst.setString(1, id);
+           pst.setString(1, name);
+           pst.setString(2,edition);
+           pst.setString(3, pub);
+           pst.setString(4, price);
+           pst.setString(5, pages);
+           pst.setString(6, id);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Book Updated");
+//            
+//            n.setText("");
+//            m.setText("");
+//            c.setText("");
+            
+        } 
+//        catch (ClassNotFoundException ex) {
+//            Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        catch (SQLException ex) {
+            Logger.getLogger(student.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
